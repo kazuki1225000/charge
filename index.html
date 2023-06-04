@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Webアプリ</title>
+  <style>
+    body {
+      background-color: #929292;
+    }
+
+    #image {
+      width: 40rem;
+      height: 40rem;
+      background-image: url('imageA.png');
+      background-size: cover;
+      cursor: pointer;
+      text-align: center;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="image"></div>
+
+  <script>
+    var image = document.getElementById('image');
+    var p = 0.3; // 確率p (0から1の間の値)
+    var isImageA = true;
+
+    function play_bucchi(){
+        playAudio('audio2.mp3');
+    }
+    // 画像Aをクリックしたときの処理
+    image.addEventListener('click', function() {
+      if (isImageA) {
+        image.style.backgroundImage = "url('imageB.png')";
+        playAudio('audio1.mp3');
+        if (Math.random() < p) {
+            window.setTimeout(play_bucchi, Math.random()*3000);
+        }
+        isImageA = false;
+      } else {
+        image.style.backgroundImage = "url('imageA.png')";
+        isImageA = true;
+      }
+    });
+
+    // 右クリック時のデフォルト動作を無効化する
+    image.addEventListener('contextmenu', function(event) {
+      event.preventDefault();
+    });
+
+    // 音声ファイルを再生する関数
+    function playAudio(source) {
+      var audio = new Audio(source);
+      audio.play();
+    }
+  </script>
+</body>
+</html>
